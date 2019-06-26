@@ -1,6 +1,7 @@
 package fr.opineppes.minecraft.ageevolution;
 
 import fr.opineppes.minecraft.ageevolution.blocks.CeilingLight;
+import fr.opineppes.minecraft.ageevolution.blocks.CeilingLightBars;
 import fr.opineppes.minecraft.ageevolution.blocks.SchoolChair;
 import fr.opineppes.minecraft.ageevolution.blocks.SchoolTable;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
@@ -18,4 +19,5 @@ public class AgeEvolutionBlocks {
 	public static final Block SCHOOL_CHAIR = new SchoolChair(FabricBlockSettings.of(Material.METAL).build());
 	public static final Block SCHOOL_TABLE = new SchoolTable(FabricBlockSettings.of(Material.METAL).build());
 	public static final Block CEILING_LIGHT = new CeilingLight(FabricBlockSettings.of(Material.METAL).noCollision().lightLevel(15).build());
+	public static final Block CEILING_LIGHT_BARS = new CeilingLightBars(FabricBlockSettings.of(Material.METAL).noCollision().lightLevel(15).build());
 }

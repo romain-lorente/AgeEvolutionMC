@@ -1,0 +1,152 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
+    "textures": {
+    	"particle": "ageevolution:block/ceiling_light_gray",
+        "gray": "ageevolution:block/ceiling_light_gray",
+        "light": "ageevolution:block/ceiling_light_light",
+        "mediumgray": "ageevolution:block/ceiling_light_mediumgray"
+    },
+    "display": {
+        "gui": {
+            "rotation": [ 30, 45, 90 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 0.625, 0.625, 0.625 ]
+        },
+        "ground": {
+            "rotation": [ 0, 0, 0 ],
+            "translation": [ 0, 3, 0 ],
+            "scale": [ 0.25, 0.25, 0.25 ]
+        },
+        "fixed": {
+            "rotation": [ 0, 180, 90 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "head": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, 315, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.4, 0.4, 0.4 ]
+        },
+        "thirdperson_righthand": {
+            "rotation": [ 75, 315, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.375, 0.375, 0.375 ]
+        }
+    },
+    "elements": [
+        {
+            "name": "Cube",
+            "from": [ 0, 15.75, 0 ], 
+            "to": [ 16, 16, 16 ], 
+            "faces": {
+                "north": { "texture": "#gray", "uv": [ 0, 0, 16, 0.25 ] },
+                "east": { "texture": "#gray", "uv": [ 0, 0, 16, 0.25 ] },
+                "south": { "texture": "#gray", "uv": [ 0, 0, 16, 0.25 ] },
+                "west": { "texture": "#gray", "uv": [ 0, 0, 16, 0.25 ] },
+                "up": { "texture": "#gray", "uv": [ 0, 0, 16, 16 ] },
+                "down": { "texture": "#gray", "uv": [ 0, 0, 16, 16 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 0, 15, 0 ], 
+            "to": [ 16, 15.75, 0.5 ], 
+            "faces": {
+                "north": { "texture": "#gray", "uv": [ 0, 0, 16, 0.75 ] },
+                "east": { "texture": "#gray", "uv": [ 0, 0, 0.5, 0.75 ] },
+                "south": { "texture": "#gray", "uv": [ 0, 0, 15, 0.75 ] },
+                "west": { "texture": "#gray", "uv": [ 0, 0, 0.5, 0.75 ] },
+                "down": { "texture": "#gray", "uv": [ 0, 0, 16, 0.5 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 0, 15, 0.5 ], 
+            "to": [ 0.5, 15.75, 15.5 ], 
+            "faces": {
+                "east": { "texture": "#gray", "uv": [ 0, 0, 15, 0.75 ] },
+                "west": { "texture": "#gray", "uv": [ 0, 0, 15, 0.75 ] },
+                "down": { "texture": "#gray", "uv": [ 0, 0, 0.5, 15 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 2, 14.75, 2 ], 
+            "to": [ 3, 15.75, 14 ], 
+            "shade": false,
+            "faces": {
+                "north": { "texture": "#mediumgray", "uv": [ 0, 0, 1, 1 ] },
+                "east": { "texture": "#light", "uv": [ 0, 0, 12, 1 ] },
+                "south": { "texture": "#mediumgray", "uv": [ 0, 0, 1, 1 ] },
+                "west": { "texture": "#light", "uv": [ 0, 0, 12, 1 ] },
+                "down": { "texture": "#light", "uv": [ 0, 0, 1, 12 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 0, 15, 15.5 ], 
+            "to": [ 16, 15.75, 16 ], 
+            "faces": {
+                "north": { "texture": "#gray", "uv": [ 0, 0, 16, 0.75 ] },
+                "east": { "texture": "#gray", "uv": [ 0, 0, 0.5, 0.75 ] },
+                "south": { "texture": "#gray", "uv": [ 0, 0, 15, 0.75 ] },
+                "west": { "texture": "#gray", "uv": [ 0, 0, 0.5, 0.75 ] },
+                "down": { "texture": "#gray", "uv": [ 0, 0, 16, 0.5 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 15.5, 15, 0.5 ], 
+            "to": [ 16, 15.75, 15.5 ], 
+            "faces": {
+                "east": { "texture": "#gray", "uv": [ 0, 0, 15, 0.75 ] },
+                "west": { "texture": "#gray", "uv": [ 0, 0, 15, 0.75 ] },
+                "down": { "texture": "#gray", "uv": [ 0, 0, 0.5, 15 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 5.6, 14.75, 2 ], 
+            "to": [ 6.6, 15.75, 14 ], 
+            "shade": false,
+            "faces": {
+                "north": { "texture": "#mediumgray", "uv": [ 0, 0, 1, 1 ] },
+                "east": { "texture": "#light", "uv": [ 0, 0, 12, 1 ] },
+                "south": { "texture": "#mediumgray", "uv": [ 0, 0, 1, 1 ] },
+                "west": { "texture": "#light", "uv": [ 0, 0, 12, 1 ] },
+                "down": { "texture": "#light", "uv": [ 0, 0, 1, 12 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 9.4, 14.75, 2 ], 
+            "to": [ 10.4, 15.75, 14 ], 
+            "shade": false,
+            "faces": {
+                "north": { "texture": "#mediumgray", "uv": [ 0, 0, 1, 1 ] },
+                "east": { "texture": "#light", "uv": [ 0, 0, 12, 1 ] },
+                "south": { "texture": "#mediumgray", "uv": [ 0, 0, 1, 1 ] },
+                "west": { "texture": "#light", "uv": [ 0, 0, 12, 1 ] },
+                "down": { "texture": "#light", "uv": [ 0, 0, 1, 12 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 13, 14.75, 2 ], 
+            "to": [ 14, 15.75, 14 ], 
+            "shade": false,
+            "faces": {
+                "north": { "texture": "#mediumgray", "uv": [ 0, 0, 1, 1 ] },
+                "east": { "texture": "#light", "uv": [ 0, 0, 12, 1 ] },
+                "south": { "texture": "#mediumgray", "uv": [ 0, 0, 1, 1 ] },
+                "west": { "texture": "#light", "uv": [ 0, 0, 12, 1 ] },
+                "down": { "texture": "#light", "uv": [ 0, 0, 1, 12 ] }
+            }
+        }
+    ]
+}

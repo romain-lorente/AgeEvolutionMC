@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "orient=z": { "model": "ageevolution:block/ceiling_light_bars", "y": 90 },
+        "orient=x": { "model": "ageevolution:block/ceiling_light_bars" }
+    }
+}
