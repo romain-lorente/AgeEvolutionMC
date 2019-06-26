@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "facing=north,with_chair=false": { "model": "ageevolution:block/school_table"},
+        "facing=south,with_chair=false": { "model": "ageevolution:block/school_table", "y": 180 },
+        "facing=west,with_chair=false": { "model": "ageevolution:block/school_table", "y": 270 },
+        "facing=east,with_chair=false": { "model": "ageevolution:block/school_table", "y": 90 },
+        "facing=north,with_chair=true": { "model": "ageevolution:block/school_table_with_chair"},
+        "facing=south,with_chair=true": { "model": "ageevolution:block/school_table_with_chair", "y": 180 },
+        "facing=west,with_chair=true": { "model": "ageevolution:block/school_table_with_chair", "y": 270 },
+        "facing=east,with_chair=true": { "model": "ageevolution:block/school_table_with_chair", "y": 90 }
+    }
+}

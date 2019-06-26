@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "ageevolution:block/school_chair"},
+        "facing=south": { "model": "ageevolution:block/school_chair", "y": 180 },
+        "facing=west": { "model": "ageevolution:block/school_chair", "y": 270 },
+        "facing=east": { "model": "ageevolution:block/school_chair", "y": 90 }
+    }
+}
