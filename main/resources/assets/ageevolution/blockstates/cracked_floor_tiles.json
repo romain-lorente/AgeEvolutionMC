@@ -1,0 +1,11 @@
+{
+    "variants": {
+        "": [
+        	{ "model": "ageevolution:block/cracked_floor_tiles_1", "weight": 60  },
+        	{ "model": "ageevolution:block/cracked_floor_tiles_2", "weight": 10  },
+        	{ "model": "ageevolution:block/cracked_floor_tiles_3", "weight": 10  },
+        	{ "model": "ageevolution:block/cracked_floor_tiles_4", "weight": 10  },
+        	{ "model": "ageevolution:block/cracked_floor_tiles_5", "weight": 10  }
+        ]
+    }
+}

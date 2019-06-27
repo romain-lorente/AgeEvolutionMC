@@ -24,6 +24,7 @@ public class AgeEvolution implements ModInitializer {
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "school_table"), AgeEvolutionBlocks.SCHOOL_TABLE);
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "ceiling_light"), AgeEvolutionBlocks.CEILING_LIGHT);
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "ceiling_light_bars"), AgeEvolutionBlocks.CEILING_LIGHT_BARS);
+		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "cracked_floor_tiles"), AgeEvolutionBlocks.CRACKED_FLOOR_TILES);
 		
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "magic_wand"), AgeEvolutionItems.MAGIC_WAND);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "awp_gun"), AgeEvolutionItems.AWP_GUN);
@@ -37,6 +38,7 @@ public class AgeEvolution implements ModInitializer {
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "school_table"), new BlockItem(AgeEvolutionBlocks.SCHOOL_TABLE, new Item.Settings().group(GROUP_DECO)));
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "ceiling_light"), new BlockItem(AgeEvolutionBlocks.CEILING_LIGHT, new Item.Settings().group(GROUP_DECO)));
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "ceiling_light_bars"), new BlockItem(AgeEvolutionBlocks.CEILING_LIGHT_BARS, new Item.Settings().group(GROUP_DECO)));
+		Registry.register(Registry.ITEM, new Identifier("ageevolution", "cracked_floor_tiles"), new BlockItem(AgeEvolutionBlocks.CRACKED_FLOOR_TILES, new Item.Settings().group(GROUP_DECO)));
 		
 		//Registry.register(Registry.ENTITY_TYPE, new Identifier("ageevolution", "chair"), AgeEvolutionEntities.CHAIR);
 	}

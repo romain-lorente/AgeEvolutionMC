@@ -14,6 +14,7 @@ public class AgeEvolutionBlocks {
 	public static final Block FLOOR_TILES = new Block(FabricBlockSettings.of(Material.STONE).strength(1.5F, 6.0F).build());
 	public static final Block FLOOR_TILE_DARK = new Block(FabricBlockSettings.of(Material.STONE).strength(1.5F, 6.0F).build());
 	public static final Block FLOOR_TILE_LIGHT = new Block(FabricBlockSettings.of(Material.STONE).strength(1.5F, 6.0F).build());
+	public static final Block CRACKED_FLOOR_TILES = new Block(FabricBlockSettings.of(Material.STONE).strength(1.5F, 6.0F).build());
 	
 	//Avec model perso
 	public static final Block SCHOOL_CHAIR = new SchoolChair(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
