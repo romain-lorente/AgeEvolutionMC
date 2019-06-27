@@ -19,6 +19,7 @@ public class AgeEvolutionBlocks {
 	//Avec model perso
 	public static final Block SCHOOL_CHAIR = new SchoolChair(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
 	public static final Block SCHOOL_TABLE = new SchoolTable(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
+	public static final Block FIRE_EXTINGUISHER = new Block(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
 	public static final Block CEILING_LIGHT = new CeilingLight(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).noCollision().lightLevel(15).build());
 	public static final Block CEILING_LIGHT_BARS = new CeilingLightBars(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).noCollision().lightLevel(15).build());
 }
