@@ -1,0 +1,12 @@
+{
+    "variants": {
+    	"facing=north,type=ground": { "model": "ageevolution:block/fire_extinguisher_ground"},
+        "facing=south,type=ground": { "model": "ageevolution:block/fire_extinguisher_ground", "y": 180 },
+        "facing=west,type=ground": { "model": "ageevolution:block/fire_extinguisher_ground", "y": 270 },
+        "facing=east,type=ground": { "model": "ageevolution:block/fire_extinguisher_ground", "y": 90 },
+        "facing=north,type=wall": { "model": "ageevolution:block/fire_extinguisher"},
+        "facing=south,type=wall": { "model": "ageevolution:block/fire_extinguisher", "y": 180 },
+        "facing=west,type=wall": { "model": "ageevolution:block/fire_extinguisher", "y": 270 },
+        "facing=east,type=wall": { "model": "ageevolution:block/fire_extinguisher", "y": 90 }
+    }
+}

@@ -1,0 +1,42 @@
+{
+    "type": "minecraft:block",
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "ageevolution:school_table"
+                }
+            ],
+            "conditions": [
+                {
+                    "condition": "minecraft:survives_explosion"
+                }
+            ]
+        },
+        {
+            "rolls":1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "ageevolution:school_chair",
+                    "conditions": [
+                        {
+                            "condition": "minecraft:block_state_property",
+                            "block": "ageevolution:school_table",
+                            "properties": {
+                                "with_chair": true
+                            }
+                        }
+                    ]
+                }
+            ],
+            "conditions": [
+                {
+                    "condition": "minecraft:survives_explosion"
+                }
+            ]
+        }
+    ]
+}
