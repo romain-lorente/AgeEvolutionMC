@@ -35,6 +35,7 @@ public class AgeEvolutionBlocks {
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "floor_tiles"), FLOOR_TILES);
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "floor_tile_dark"), FLOOR_TILE_DARK);
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "floor_tile_light"), FLOOR_TILE_LIGHT);
+		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "iron_plate"), IRON_PLATE);
 		
 		//Blocs avec un model perso
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "school_chair"), SCHOOL_CHAIR);
