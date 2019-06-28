@@ -24,6 +24,7 @@ public class AgeEvolutionItems {
 	public static final Item CEILING_LIGHT = new BlockItem(AgeEvolutionBlocks.CEILING_LIGHT, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item CEILING_LIGHT_BARS = new BlockItem(AgeEvolutionBlocks.CEILING_LIGHT_BARS, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item CRACKED_FLOOR_TILES = new BlockItem(AgeEvolutionBlocks.CRACKED_FLOOR_TILES, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
+	public static final Item IRON_PLATE = new BlockItem(AgeEvolutionBlocks.IRON_PLATE, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item FIRE_EXTINGUISHER = new BlockItem(AgeEvolutionBlocks.FIRE_EXTINGUISHER, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	
 	
@@ -42,6 +43,7 @@ public class AgeEvolutionItems {
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "ceiling_light"), CEILING_LIGHT);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "ceiling_light_bars"), CEILING_LIGHT_BARS);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "cracked_floor_tiles"), CRACKED_FLOOR_TILES);
+		Registry.register(Registry.ITEM, new Identifier("ageevolution", "iron_plate"), IRON_PLATE);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "fire_extinguisher"), FIRE_EXTINGUISHER);
 		
 	}
