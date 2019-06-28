@@ -36,6 +36,22 @@ public class SchoolTable extends HorizontalFacingBlock {
 		this.setDefaultState((BlockState)((BlockState)this.stateFactory.getDefaultState()).with(FACING, Direction.NORTH));
 	}
 	
+	public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
+		BlockPos faceBlockPos = blockPos_1.offset(blockState_1.get(FACING));
+		BlockState faceBlock = world_1.getBlockState(faceBlockPos);
+		if(faceBlock.getBlock() == Blocks.AIR && blockState_1.get(WITH_CHAIR))
+		{
+			Direction faceBlockDirection = blockState_1.get(FACING).getOpposite();
+			BlockState chairBlockState = AgeEvolutionBlocks.SCHOOL_CHAIR.getDefaultState();
+			world_1.setBlockState(faceBlockPos, chairBlockState.with(SchoolChair.FACING, faceBlockDirection));
+			
+			BlockState newBlockState = blockState_1.with(SchoolTable.WITH_CHAIR, false);
+			world_1.setBlockState(blockPos_1, newBlockState);
+			return true;
+		}
+		return false;
+	}
+	
 	public VoxelShape getOutlineShape(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1, EntityContext entityContext_1) {
 		if(blockState_1.get(WITH_CHAIR))
 		{
@@ -57,22 +73,6 @@ public class SchoolTable extends HorizontalFacingBlock {
 	
 	public BlockRenderType getRenderType(BlockState blockState_1) {
 		return BlockRenderType.MODEL;
-	}
-	
-	public boolean activate(BlockState blockState_1, World world_1, BlockPos blockPos_1, PlayerEntity playerEntity_1, Hand hand_1, BlockHitResult blockHitResult_1) {
-		BlockPos faceBlockPos = blockPos_1.offset(blockState_1.get(FACING));
-		BlockState faceBlock = world_1.getBlockState(faceBlockPos);
-		if(faceBlock.getBlock() == Blocks.AIR && blockState_1.get(WITH_CHAIR))
-		{
-			Direction faceBlockDirection = blockState_1.get(FACING).getOpposite();
-			BlockState chairBlockState = AgeEvolutionBlocks.SCHOOL_CHAIR.getDefaultState();
-			world_1.setBlockState(faceBlockPos, chairBlockState.with(SchoolChair.FACING, faceBlockDirection));
-			
-			BlockState newBlockState = blockState_1.with(SchoolTable.WITH_CHAIR, false);
-			world_1.setBlockState(blockPos_1, newBlockState);
-			return true;
-		}
-		return false;
 	}
 	
 	protected void appendProperties(StateFactory.Builder<Block, BlockState> stateFactory$Builder_1) {
