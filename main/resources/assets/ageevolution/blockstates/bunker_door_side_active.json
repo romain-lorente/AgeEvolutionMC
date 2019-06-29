@@ -1,0 +1,18 @@
+{
+    "variants": {
+    	"facing=north,type=bottom": { "model": "ageevolution:block/bunker_door_side", "y": 90 },
+        "facing=south,type=bottom": { "model": "ageevolution:block/bunker_door_side", "y": 90 },
+        "facing=west,type=bottom": { "model": "ageevolution:block/bunker_door_side" },
+        "facing=east,type=bottom": { "model": "ageevolution:block/bunker_door_side" },
+        
+        "facing=north,type=top": { "model": "ageevolution:block/bunker_door_side", "x": 180, "y": 90 },
+        "facing=south,type=top": { "model": "ageevolution:block/bunker_door_side", "x": 180, "y": 90 },
+        "facing=west,type=top": { "model": "ageevolution:block/bunker_door_side", "x": 180 },
+        "facing=east,type=top": { "model": "ageevolution:block/bunker_door_side", "x": 180 },
+        
+        "facing=north,type=side": { "model": "ageevolution:block/bunker_door_side", "x": 90 },
+        "facing=south,type=side": { "model": "ageevolution:block/bunker_door_side", "x": 90, "y": 180},
+        "facing=west,type=side": { "model": "ageevolution:block/bunker_door_side", "x": 90, "y": 270 },
+        "facing=east,type=side": { "model": "ageevolution:block/bunker_door_side", "x": 90, "y": 90 }
+    }
+}

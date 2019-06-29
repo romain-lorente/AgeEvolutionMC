@@ -10,6 +10,7 @@ public class AgeEvolution implements ModInitializer {
 		//Deplacement des enregistrement dans les fichier respectif
 		AgeEvolutionBlocks.registerAllBlocks();
 		AgeEvolutionItems.registerAllItems();
+		AgeEvolutionsBlockEntities.registerAllBlockEntities();
 		
 		//Registry.register(Registry.ENTITY_TYPE, new Identifier("ageevolution", "chair"), AgeEvolutionEntities.CHAIR);
 		

@@ -1,5 +1,9 @@
 package fr.opineppes.minecraft.ageevolution;
 
+import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorCornerActive;
+import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorCornerDeco;
+import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorSideActive;
+import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorSideDeco;
 import fr.opineppes.minecraft.ageevolution.blocks.CeilingLight;
 import fr.opineppes.minecraft.ageevolution.blocks.CeilingLightBars;
 import fr.opineppes.minecraft.ageevolution.blocks.FireExtinguisher;
@@ -26,7 +30,11 @@ public class AgeEvolutionBlocks {
 	public static final Block FIRE_EXTINGUISHER = new FireExtinguisher(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
 	public static final Block CEILING_LIGHT = new CeilingLight(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).noCollision().lightLevel(15).build());
 	public static final Block CEILING_LIGHT_BARS = new CeilingLightBars(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).noCollision().lightLevel(15).build());
-
+	public static final Block BUNKER_DOOR_CORNER_DECO = new BunkerDoorCornerDeco(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
+	public static final Block BUNKER_DOOR_SIDE_DECO = new BunkerDoorSideDeco(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
+	public static final Block BUNKER_DOOR_CORNER_ACTIVE = new BunkerDoorCornerActive(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
+	public static final Block BUNKER_DOOR_SIDE_ACTIVE = new BunkerDoorSideActive(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
+	
 	public static void registerAllBlocks()
 	{
 		//Pour enregistrer un item de bloc, se rendre dans AgeEvolutionItems
@@ -45,5 +53,9 @@ public class AgeEvolutionBlocks {
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "ceiling_light_bars"), CEILING_LIGHT_BARS);
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "cracked_floor_tiles"), CRACKED_FLOOR_TILES);
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "fire_extinguisher"), FIRE_EXTINGUISHER);
+		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "bunker_door_corner_deco"), BUNKER_DOOR_CORNER_DECO);
+		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "bunker_door_side_deco"), BUNKER_DOOR_SIDE_DECO);
+		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "bunker_door_corner_active"), BUNKER_DOOR_CORNER_ACTIVE);
+		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "bunker_door_side_active"), BUNKER_DOOR_SIDE_ACTIVE);
 	}
 }
