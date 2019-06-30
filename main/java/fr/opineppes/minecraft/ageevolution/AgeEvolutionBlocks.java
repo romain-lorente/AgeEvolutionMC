@@ -23,6 +23,8 @@ public class AgeEvolutionBlocks {
 	public static final Block FLOOR_TILE_DARK = new Block(FabricBlockSettings.of(Material.STONE).strength(1.5F, 6.0F).build());
 	public static final Block FLOOR_TILE_LIGHT = new Block(FabricBlockSettings.of(Material.STONE).strength(1.5F, 6.0F).build());
 	public static final Block IRON_PLATE = new Block(FabricBlockSettings.of(Material.METAL).strength(5.0F, 30.0F).build());
+	public static final Block CRYSTAL_BLOCK = new Block(FabricBlockSettings.of(Material.GLASS).strength(2.5F, 15.0F).build());
+	public static final Block BLUE_BRICKS = new Block(FabricBlockSettings.of(Material.STONE).strength(2.0F, 30.0F).build());
 	public static final Block CRACKED_FLOOR_TILES = new Block(FabricBlockSettings.of(Material.STONE).strength(1.5F, 6.0F).build());
 	
 	//Blocs avec un model perso
@@ -48,6 +50,8 @@ public class AgeEvolutionBlocks {
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "floor_tile_dark"), FLOOR_TILE_DARK);
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "floor_tile_light"), FLOOR_TILE_LIGHT);
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "iron_plate"), IRON_PLATE);
+		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "crystal_block"), CRYSTAL_BLOCK);
+		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "blue_bricks"), BLUE_BRICKS);
 		
 		//Blocs avec un model perso
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "school_chair"), SCHOOL_CHAIR);

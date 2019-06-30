@@ -27,6 +27,8 @@ public class AgeEvolutionItems {
 	public static final Item CEILING_LIGHT_BARS = new BlockItem(AgeEvolutionBlocks.CEILING_LIGHT_BARS, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item CRACKED_FLOOR_TILES = new BlockItem(AgeEvolutionBlocks.CRACKED_FLOOR_TILES, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item IRON_PLATE = new BlockItem(AgeEvolutionBlocks.IRON_PLATE, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
+	public static final Item CRYSTAL_BLOCK = new BlockItem(AgeEvolutionBlocks.CRYSTAL_BLOCK, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
+	public static final Item BLUE_BRICKS = new BlockItem(AgeEvolutionBlocks.BLUE_BRICKS, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item FIRE_EXTINGUISHER = new BlockItem(AgeEvolutionBlocks.FIRE_EXTINGUISHER, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item BUNKER_DOOR_CORNER_DECO = new BlockItem(AgeEvolutionBlocks.BUNKER_DOOR_CORNER_DECO, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item BUNKER_DOOR_SIDE_DECO = new BlockItem(AgeEvolutionBlocks.BUNKER_DOOR_SIDE_DECO, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
@@ -48,6 +50,8 @@ public class AgeEvolutionItems {
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "ceiling_light_bars"), CEILING_LIGHT_BARS);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "cracked_floor_tiles"), CRACKED_FLOOR_TILES);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "iron_plate"), IRON_PLATE);
+		Registry.register(Registry.ITEM, new Identifier("ageevolution", "crystal_block"), CRYSTAL_BLOCK);
+		Registry.register(Registry.ITEM, new Identifier("ageevolution", "blue_bricks"), BLUE_BRICKS);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "fire_extinguisher"), FIRE_EXTINGUISHER);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "bunker_door_corner_deco"), BUNKER_DOOR_CORNER_DECO);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "bunker_door_side_deco"), BUNKER_DOOR_SIDE_DECO);
