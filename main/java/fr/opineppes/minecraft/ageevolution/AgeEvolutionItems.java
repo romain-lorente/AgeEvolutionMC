@@ -1,6 +1,7 @@
 package fr.opineppes.minecraft.ageevolution;
 
 import fr.opineppes.minecraft.ageevolution.items.AWPGun;
+import fr.opineppes.minecraft.ageevolution.items.BunkerDoorDoor;
 import fr.opineppes.minecraft.ageevolution.items.MagicWand;
 import fr.opineppes.minecraft.ageevolution.items.FnScarGun;
 import net.minecraft.item.BlockItem;
@@ -13,6 +14,7 @@ public class AgeEvolutionItems {
 	public static final Item MAGIC_WAND = new MagicWand(new Item.Settings().group(AgeEvolutionItemGroups.GROUP_GUNS));
 	public static final Item AWP_GUN = new AWPGun(new Item.Settings().group(AgeEvolutionItemGroups.GROUP_GUNS));
 	public static final Item FN_SCAR_GUN = new FnScarGun(new Item.Settings().group(AgeEvolutionItemGroups.GROUP_GUNS));
+	public static final Item BUNKER_DOOR_DOOR = new BunkerDoorDoor(new Item.Settings().group(AgeEvolutionItemGroups.GROUP_ITEMS));
 	
 	//ItemsBlocks
 	public static final Item COLORED_COBBLESTONE = new BlockItem(AgeEvolutionBlocks.COLORED_COBBLESTONE, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
@@ -34,6 +36,7 @@ public class AgeEvolutionItems {
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "magic_wand"), MAGIC_WAND);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "awp_gun"), AWP_GUN);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "fn_scar_gun"), FN_SCAR_GUN);
+		Registry.register(Registry.ITEM, new Identifier("ageevolution", "bunker_door_door"), BUNKER_DOOR_DOOR);
 		
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "colored_cobblestone"), COLORED_COBBLESTONE);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "floor_tiles"), FLOOR_TILES);

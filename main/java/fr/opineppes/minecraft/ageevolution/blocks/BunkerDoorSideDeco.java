@@ -21,7 +21,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
-public class BunkerDoorSideDeco extends HorizontalFacingBlock {
+public class BunkerDoorSideDeco extends HorizontalFacingBlock implements BunkerDoorStructure {
 	public static final Map<Direction, VoxelShape> BOUNDING_SHAPES_TOP;
 	public static final Map<Direction, VoxelShape> BOUNDING_SHAPES_BOTTOM;
 	public static final Map<Direction, VoxelShape> BOUNDING_SHAPES_SIDE;
@@ -31,7 +31,140 @@ public class BunkerDoorSideDeco extends HorizontalFacingBlock {
 		super(block$Settings_1);
 		this.setDefaultState(this.stateFactory.getDefaultState().with(FACING, Direction.NORTH).with(TYPE, Type.BOTTOM));
 	}
+	
+	@Override
+	public Direction getPrevDirection(BlockState blockState) {
+		Direction facing = blockState.get(FACING);
+		Type type = blockState.get(TYPE);
+		
+		switch(type)
+		{
+		case TOP:
+			switch(facing)
+			{
+			case SOUTH:
+			case NORTH:
+				return Direction.EAST;
+			case EAST:
+			case WEST:
+				return Direction.SOUTH;
+			default:
+				return facing;
+			}
+		case BOTTOM:
+			switch(facing)
+			{
+			case SOUTH:
+			case NORTH:
+				return Direction.WEST;
+			case EAST:
+			case WEST:
+				return Direction.NORTH;
+			default:
+				return facing;
+			}
+		case SIDE:
+			switch(facing)
+			{
+			case NORTH:
+			case WEST:
+				return Direction.DOWN;
+			case SOUTH:
+			case EAST:
+				return Direction.UP;
+			default:
+				return facing;
+			}
+		default:
+			return null;
+		}
+	}
+	
+	@Override
+	public Direction getNextDirection(BlockState blockState) {
+		Direction facing = blockState.get(FACING);
+		Type type = blockState.get(TYPE);
+		
+		switch(type)
+		{
+		case TOP:
+			switch(facing)
+			{
+			case SOUTH:
+			case NORTH:
+				return Direction.WEST;
+			case EAST:
+			case WEST:
+				return Direction.NORTH;
+			default:
+				return facing;
+			}
+		case BOTTOM:
+			switch(facing)
+			{
+			case SOUTH:
+			case NORTH:
+				return Direction.EAST;
+			case EAST:
+			case WEST:
+				return Direction.SOUTH;
+			default:
+				return facing;
+			}
+		case SIDE:
+			switch(facing)
+			{
+			case NORTH:
+			case WEST:
+				return Direction.UP;
+			case SOUTH:
+			case EAST:
+				return Direction.DOWN;
+			default:
+				return facing;
+			}
+		default:
+			return null;
+		}
+	}
 
+	@Override
+	public Orientation getOrientation(BlockState blockState) {
+		Direction facing = blockState.get(FACING);
+		Type type = blockState.get(TYPE);
+		
+		switch(type)
+		{
+		case TOP:
+		case BOTTOM:
+			switch(facing)
+			{
+			case NORTH:
+			case SOUTH:
+				return Orientation.X;
+			case WEST:
+			case EAST:
+				return Orientation.Z;
+			default:
+				return null;
+			}
+		case SIDE:
+			switch(facing)
+			{
+			case NORTH:
+			case SOUTH:
+				return Orientation.Z;
+			case WEST:
+			case EAST:
+				return Orientation.X;
+			default:
+				return null;
+			}
+		default:
+			return null;
+		}
+	}
+	
 	public VoxelShape getOutlineShape(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1, EntityContext entityContext_1) {
 		return blockState_1.get(TYPE).getShape(blockState_1.get(FACING));
 	}

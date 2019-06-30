@@ -21,7 +21,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
-public class BunkerDoorCornerDeco extends HorizontalFacingBlock implements BunkerDoor {
+public class BunkerDoorCornerDeco extends HorizontalFacingBlock implements BunkerDoorStructure {
 	
 	public static final Map<Direction, VoxelShape> BOUNDING_SHAPES_TOP;
 	public static final Map<Direction, VoxelShape> BOUNDING_SHAPES_BOTTOM;
@@ -31,7 +31,92 @@ public class BunkerDoorCornerDeco extends HorizontalFacingBlock implements Bunke
 		super(block$Settings_1);
 		this.setDefaultState(this.stateFactory.getDefaultState().with(FACING, Direction.NORTH).with(TYPE, Type.BOTTOM));
 	}
+	
+	@Override
+	public Direction getPrevDirection(BlockState blockState) {
+		Direction facing = blockState.get(FACING);
+		Type type = blockState.get(TYPE);
+		
+		switch(type)
+		{
+		case TOP:
+			switch(facing)
+			{
+			case WEST:
+			case NORTH:
+				return Direction.DOWN;
+			default:
+				return facing;
+			}
+		case BOTTOM:
+			switch(facing)
+			{
+			case SOUTH:
+			case EAST:
+				return Direction.UP;
+			default:
+				return facing;
+			}
+		default:
+			return null;
+		}
+	}
+	
+	@Override
+	public Direction getNextDirection(BlockState blockState) {
+		Direction facing = blockState.get(FACING);
+		Type type = blockState.get(TYPE);
+		
+		switch(type)
+		{
+		case TOP:
+			switch(facing)
+			{
+			case SOUTH:
+			case EAST:
+				return Direction.DOWN;
+			default:
+				return facing;
+			}
+		case BOTTOM:
+			switch(facing)
+			{
+			case NORTH:
+			case WEST:
+				return Direction.UP;
+			default:
+				return facing;
+			}
+		default:
+			return null;
+		}
+	}
 
+	public Orientation getOrientation(BlockState blockState)
+	{
+		Direction facing = blockState.get(FACING);
+		Type type = blockState.get(TYPE);
+		
+		switch(type)
+		{
+		case TOP:
+		case BOTTOM:
+			switch(facing)
+			{
+			case NORTH:
+			case SOUTH:
+				return Orientation.Z;
+			case WEST:
+			case EAST:
+				return Orientation.X;
+			default:
+				return null;
+			}
+		default:
+			return null;
+		}
+	}
+	
 	public VoxelShape getOutlineShape(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1, EntityContext entityContext_1) {
 		return blockState_1.get(TYPE).getShape(blockState_1.get(FACING));
 	}

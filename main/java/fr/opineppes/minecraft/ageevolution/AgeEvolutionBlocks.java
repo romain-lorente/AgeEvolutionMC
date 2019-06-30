@@ -1,5 +1,6 @@
 package fr.opineppes.minecraft.ageevolution;
 
+import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorBarrier;
 import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorCornerActive;
 import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorCornerDeco;
 import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorSideActive;
@@ -34,6 +35,8 @@ public class AgeEvolutionBlocks {
 	public static final Block BUNKER_DOOR_SIDE_DECO = new BunkerDoorSideDeco(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
 	public static final Block BUNKER_DOOR_CORNER_ACTIVE = new BunkerDoorCornerActive(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
 	public static final Block BUNKER_DOOR_SIDE_ACTIVE = new BunkerDoorSideActive(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
+	public static final Block BUNKER_DOOR_BARRIER = new BunkerDoorBarrier(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
+	
 	
 	public static void registerAllBlocks()
 	{
@@ -57,5 +60,6 @@ public class AgeEvolutionBlocks {
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "bunker_door_side_deco"), BUNKER_DOOR_SIDE_DECO);
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "bunker_door_corner_active"), BUNKER_DOOR_CORNER_ACTIVE);
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "bunker_door_side_active"), BUNKER_DOOR_SIDE_ACTIVE);
+		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "bunker_door_barrier"), BUNKER_DOOR_BARRIER);
 	}
 }
