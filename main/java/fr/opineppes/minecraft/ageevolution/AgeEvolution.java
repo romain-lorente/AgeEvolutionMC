@@ -11,6 +11,7 @@ public class AgeEvolution implements ModInitializer {
 		AgeEvolutionBlocks.registerAllBlocks();
 		AgeEvolutionItems.registerAllItems();
 		AgeEvolutionsBlockEntities.registerAllBlockEntities();
+		AgeEvolutionBlockEntityRenderers.registerAllBlockEntityRenderers();
 		
 		//Registry.register(Registry.ENTITY_TYPE, new Identifier("ageevolution", "chair"), AgeEvolutionEntities.CHAIR);
 		

@@ -2,7 +2,7 @@ package fr.opineppes.minecraft.ageevolution.items;
 
 import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorStructure;
 import fr.opineppes.minecraft.ageevolution.blueprints.BunkerDoorBlueprint;
-import fr.opineppes.minecraft.ageevolution.blueprints.BunkerDoorBlueprint.BadBunkerDoorBlueprint;
+import fr.opineppes.minecraft.ageevolution.blueprints.structures.BunkerDoorObject;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
@@ -23,16 +23,21 @@ public class BunkerDoorDoor extends Item {
 	    BlockState startBlockState = world.getBlockState(startBlockPos);
 	    if(startBlockState.getBlock() instanceof BunkerDoorStructure)
 	    {
-	    	try {
-				BunkerDoorBlueprint.create(world, startBlockPos, startBlockState);
+	    	BunkerDoorBlueprint doorBlueprint = BunkerDoorBlueprint.create(world, startBlockPos, startBlockState).verifyStructure();
+	    	
+	    	if(doorBlueprint.isValid())
+	    	{
+	    		if(!world.isClient)
+	    		{
+		    		BunkerDoorObject door = doorBlueprint.build();
+		    		door.construct();
+	    		}
 		    	return ActionResult.SUCCESS;
-			} catch (BadBunkerDoorBlueprint e) {
-				if(!world.isClient)
-				{
-					itemUsageContext_1.getPlayer().sendMessage(new TextComponent(e.getMessage()));
-				}
-				return ActionResult.PASS;
-			}
+	    	}
+	    	else if(world.isClient)
+	    	{
+	    		itemUsageContext_1.getPlayer().sendMessage(new TextComponent(doorBlueprint.getErrorMessage()));
+	    	}
 	    }
 		return ActionResult.PASS;
 	}

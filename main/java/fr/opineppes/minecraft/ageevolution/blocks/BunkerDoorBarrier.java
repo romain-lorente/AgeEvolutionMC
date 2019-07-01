@@ -26,7 +26,7 @@ public class BunkerDoorBarrier extends BunkerDoorActive {
 	}
 	
 	public BlockRenderType getRenderType(BlockState blockState_1) {
-		return BlockRenderType.INVISIBLE;
+		return BlockRenderType.MODEL;
 	}
 
 	@Override

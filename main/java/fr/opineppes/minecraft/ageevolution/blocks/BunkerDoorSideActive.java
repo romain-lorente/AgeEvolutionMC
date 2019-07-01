@@ -5,6 +5,7 @@ import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
+import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorSideDeco.Type;
 import fr.opineppes.minecraft.ageevolution.shapes.BunkerDoorClosedShapes;
 import fr.opineppes.minecraft.ageevolution.shapes.BunkerDoorSideShapes;
 import net.minecraft.block.Block;
@@ -13,7 +14,6 @@ import net.minecraft.entity.EntityContext;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateFactory.Builder;
 import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -41,6 +41,18 @@ public class BunkerDoorSideActive extends BunkerDoorActive {
 	@Override
 	public VoxelShape getClosedOutlineShape(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1,
 			EntityContext entityContext_1) {
+		if(blockState_1.get(TYPE) == Type.SIDE)
+			switch(blockState_1.get(FACING))
+			{
+			case NORTH:
+			case SOUTH:
+				return BunkerDoorClosedShapes.Z;
+			case EAST:
+			case WEST:
+				return BunkerDoorClosedShapes.X;
+			default:
+				break;
+			}
 		return BOUNDING_SHAPES_CLOSED.get(blockState_1.get(FACING));
 	}
 	
@@ -62,30 +74,5 @@ public class BunkerDoorSideActive extends BunkerDoorActive {
 		BOUNDING_SHAPES_SIDE = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, BunkerDoorSideShapes.NORTH_SIDE, Direction.EAST, BunkerDoorSideShapes.EAST_SIDE, Direction.SOUTH, BunkerDoorSideShapes.SOUTH_SIDE, Direction.WEST, BunkerDoorSideShapes.WEST_SIDE));
 		BOUNDING_SHAPES_CLOSED = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, BunkerDoorClosedShapes.X, Direction.EAST, BunkerDoorClosedShapes.Z, Direction.SOUTH, BunkerDoorClosedShapes.X, Direction.WEST, BunkerDoorClosedShapes.Z));
 		TYPE = EnumProperty.of("type", Type.class);
-	}
-	
-	public static enum Type implements StringIdentifiable
-	{
-		TOP("top", BOUNDING_SHAPES_TOP),
-		BOTTOM("bottom", BOUNDING_SHAPES_BOTTOM),
-		SIDE("side", BOUNDING_SHAPES_SIDE);
-		
-		private String id;
-		private Map<Direction, VoxelShape> shapes;
-		
-		Type(String id, Map<Direction, VoxelShape> shapes) {
-			this.id = id;
-			this.shapes = shapes;
-		}
-		
-		public VoxelShape getShape(Direction direction)
-		{
-			return shapes.get(direction);
-		}
-
-		@Override
-		public String asString() {
-			return id;
-		}
 	}
 }

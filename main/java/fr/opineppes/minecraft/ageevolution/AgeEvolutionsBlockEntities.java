@@ -6,7 +6,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class AgeEvolutionsBlockEntities {
-	public static final BlockEntityType<BunkerDoorBlockEntity> BUNKER_DOOR = BlockEntityType.Builder.create(BunkerDoorBlockEntity::new, AgeEvolutionBlocks.BUNKER_DOOR_CORNER_ACTIVE, AgeEvolutionBlocks.BUNKER_DOOR_SIDE_ACTIVE).build(null);
+	public static final BlockEntityType<BunkerDoorBlockEntity> BUNKER_DOOR = BlockEntityType.Builder.create(BunkerDoorBlockEntity::new, AgeEvolutionBlocks.BUNKER_DOOR_CORNER_ACTIVE, AgeEvolutionBlocks.BUNKER_DOOR_SIDE_ACTIVE, AgeEvolutionBlocks.BUNKER_DOOR_BARRIER).build(null);
 	
 	public static void registerAllBlockEntities()
 	{
