@@ -97,7 +97,8 @@ public class BunkerDoorBlockEntity extends BlockEntity implements BlockEntityCli
 	//Animation progress
 	
 	public void tick() {
-		System.out.println(animation);
+		if(world != null && world.isClient)
+			System.out.println(animation);
 	      this.lastAnimation = this.animation;
 //	      if (this.animation == 0.0F) {
 //	         //this.playSound(SoundEvents.BLOCK_CHEST_OPEN);
