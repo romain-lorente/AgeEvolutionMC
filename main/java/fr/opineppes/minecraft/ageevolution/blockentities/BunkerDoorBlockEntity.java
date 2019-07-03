@@ -1,21 +1,27 @@
 package fr.opineppes.minecraft.ageevolution.blockentities;
 
 import fr.opineppes.minecraft.ageevolution.AgeEvolutionsBlockEntities;
-import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorStructure.Orientation;
 import fr.opineppes.minecraft.ageevolution.blueprints.structures.BunkerDoorObject;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.World;
 
-public class BunkerDoorBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
+public class BunkerDoorBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable {
 
 	//Master
 	private boolean master = false;
 	private BunkerDoorObject doorControler = null;
+	private float animation;
+	private float lastAnimation;
 	
 	//Slave
 	private BlockPos masterPos = null;
@@ -86,6 +92,45 @@ public class BunkerDoorBlockEntity extends BlockEntity implements BlockEntityCli
 		}
 		
 		return super.toTag(compoundTag_1);
+	}
+	
+	//Animation progress
+	
+	public void tick() {
+		System.out.println(animation);
+	      this.lastAnimation = this.animation;
+//	      if (this.animation == 0.0F) {
+//	         //this.playSound(SoundEvents.BLOCK_CHEST_OPEN);
+//	      }
+	      
+	      boolean open = !isClosed();
+
+	      if (!open && this.animation > 0.0F || open && this.animation < 53.0F) {
+//	         float float_2 = this.animation;
+	         if (open) {
+	            this.animation += 0.5F;
+	         } else {
+	            this.animation -= 0.5F;
+	         }
+
+	         if (this.animation > 53.0F) {
+	            this.animation = 53.0F;
+	         }
+
+//	         if (this.animation < 0.5F && float_2 >= 0.5F) {
+//	            this.playSound(SoundEvents.BLOCK_CHEST_CLOSE);
+//	         }
+
+	         if (this.animation < 0.0F) {
+	            this.animation = 0.0F;
+	         }
+	      }
+
+	   }
+	
+	@Environment(EnvType.CLIENT)
+	public float getAnimationProgress(float float_1) {
+		return MathHelper.lerp(float_1, this.lastAnimation, this.animation);
 	}
 	
 	//Attribution et recuperation du role du TileEntity
@@ -178,22 +223,41 @@ public class BunkerDoorBlockEntity extends BlockEntity implements BlockEntityCli
 	
 	//Recuperation des proprité de la porte
 	
-	public Orientation getOrient()
+	public Direction getDirection()
 	{
 		if(master)
 		{
-			return doorControler.getOrient();
+			return doorControler.getDirection();
 		}
 		else
 		{
 			BunkerDoorBlockEntity doorMaster = getMaster();
 			if(doorMaster != null)
 			{
-				return doorMaster.getOrient();
+				return doorMaster.getDirection();
 			}
 			else
 			{
-				destroyMe();
+				return null;
+			}
+		}
+	}
+	
+	public BlockPos getDoorPosition()
+	{
+		if(master)
+		{
+			return pos;
+		}
+		else
+		{
+			BunkerDoorBlockEntity doorMaster = getMaster();
+			if(doorMaster != null)
+			{
+				return doorMaster.getDoorPosition();
+			}
+			else
+			{
 				return null;
 			}
 		}
@@ -214,7 +278,6 @@ public class BunkerDoorBlockEntity extends BlockEntity implements BlockEntityCli
 			}
 			else
 			{
-				destroyMe();
 				return null;
 			}
 		}
@@ -235,7 +298,6 @@ public class BunkerDoorBlockEntity extends BlockEntity implements BlockEntityCli
 			}
 			else
 			{
-				destroyMe();
 				return false;
 			}
 		}

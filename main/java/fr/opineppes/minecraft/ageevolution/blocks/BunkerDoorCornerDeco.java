@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import fr.opineppes.minecraft.ageevolution.shapes.BunkerDoorCornerShapes;
+import fr.opineppes.minecraft.ageevolution.utils.HorizontalAxis;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.block.BlockRenderType;
@@ -92,29 +93,10 @@ public class BunkerDoorCornerDeco extends HorizontalFacingBlock implements Bunke
 		}
 	}
 
-	public Orientation getOrientation(BlockState blockState)
+	public HorizontalAxis getAxis(BlockState blockState)
 	{
 		Direction facing = blockState.get(FACING);
-		Type type = blockState.get(TYPE);
-		
-		switch(type)
-		{
-		case TOP:
-		case BOTTOM:
-			switch(facing)
-			{
-			case NORTH:
-			case SOUTH:
-				return Orientation.Z;
-			case WEST:
-			case EAST:
-				return Orientation.X;
-			default:
-				return null;
-			}
-		default:
-			return null;
-		}
+		return HorizontalAxis.fromDirection(facing);
 	}
 	
 	public VoxelShape getOutlineShape(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1, EntityContext entityContext_1) {

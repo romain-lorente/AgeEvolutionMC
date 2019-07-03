@@ -23,7 +23,8 @@ public class BunkerDoorDoor extends Item {
 	    BlockState startBlockState = world.getBlockState(startBlockPos);
 	    if(startBlockState.getBlock() instanceof BunkerDoorStructure)
 	    {
-	    	BunkerDoorBlueprint doorBlueprint = BunkerDoorBlueprint.create(world, startBlockPos, startBlockState).verifyStructure();
+			float yaw = itemUsageContext_1.getPlayerYaw();
+	    	BunkerDoorBlueprint doorBlueprint = BunkerDoorBlueprint.create(world, startBlockPos, startBlockState, yaw).verifyStructure();
 	    	
 	    	if(doorBlueprint.isValid())
 	    	{

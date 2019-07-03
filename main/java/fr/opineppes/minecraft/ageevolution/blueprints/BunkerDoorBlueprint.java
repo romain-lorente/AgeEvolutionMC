@@ -4,8 +4,8 @@ import fr.opineppes.minecraft.ageevolution.AgeEvolutionBlocks;
 import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorCornerDeco;
 import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorStructure;
 import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorCornerDeco.Type;
-import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorStructure.Orientation;
 import fr.opineppes.minecraft.ageevolution.blueprints.structures.BunkerDoorObject;
+import fr.opineppes.minecraft.ageevolution.utils.HorizontalAxis;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -21,21 +21,23 @@ public class BunkerDoorBlueprint implements Blueprint<BunkerDoorBlueprint, Bunke
 	private World world;
 	private BlockPos startBlockPos;
 	private BlockState startBlockState;
-	private Orientation startOrientation;
+	private HorizontalAxis startAxis;
+	private Direction direction;
 	
 	//Cache
 	private boolean valid;
 	private BlockPos[] corners;
 	private String invalidityMessage;
 	
-	private BunkerDoorBlueprint(World world, BlockPos startBlockPos, BlockState startBlockState)
+	private BunkerDoorBlueprint(World world, BlockPos startBlockPos, BlockState startBlockState, float yaw)
 	{
 		this.world = world;
 		this.startBlockPos = startBlockPos;
 		this.startBlockState = startBlockState;
 		
 		BunkerDoorStructure actualBlock = (BunkerDoorStructure) startBlockState.getBlock();
-		startOrientation = actualBlock.getOrientation(startBlockState);
+		startAxis = actualBlock.getAxis(startBlockState);
+		direction = startAxis.getPerpendDirection(yaw);
 		
 		valid = false;
 		corners = new BlockPos[4];
@@ -52,8 +54,6 @@ public class BunkerDoorBlueprint implements Blueprint<BunkerDoorBlueprint, Bunke
     	BlockState actualBlockState = startBlockState;
     	BunkerDoorStructure actualBlock = (BunkerDoorStructure) startBlockState.getBlock();
     	
-    	Orientation startOrientation = actualBlock.getOrientation(startBlockState);
-    	
     	while(!end)
     	{
     		Direction nextDirection = actualBlock.getNextDirection(actualBlockState);
@@ -64,7 +64,7 @@ public class BunkerDoorBlueprint implements Blueprint<BunkerDoorBlueprint, Bunke
     		{
 		    	actualBlock = (BunkerDoorStructure) actualBlockState.getBlock();
 		    	
-		    	boolean flag1 = actualBlock.getOrientation(actualBlockState) != startOrientation;
+		    	boolean flag1 = actualBlock.getAxis(actualBlockState) != startAxis;
 		    	boolean flag2 = actualBlock.getPrevDirection(actualBlockState).getOpposite() != nextDirection;
 		    	boolean flag3 = actualBlockPos.equals(startBlockPos);
 		    	
@@ -83,12 +83,12 @@ public class BunkerDoorBlueprint implements Blueprint<BunkerDoorBlueprint, Bunke
     	
     	if(tempValid)
     	{
-    		Vec2f size = getSize(startOrientation, corners[0], corners[2]);
+    		Vec2f size = getSize(startAxis, corners[0], corners[2]);
     		
     		if(size.x >= 3 && size.y >= 3)
     		{
-    			BlockPos controlerPos = getControler(world, startOrientation, corners);
-    			if(!isObstrued(world, controlerPos, size, startOrientation))
+    			BlockPos controlerPos = getControler(world, startAxis, corners);
+    			if(!isObstrued(world, controlerPos, size, startAxis))
     			{
     				valid = true;
     			}
@@ -112,12 +112,13 @@ public class BunkerDoorBlueprint implements Blueprint<BunkerDoorBlueprint, Bunke
 	
 	public BunkerDoorObject build()
 	{
-		BlockPos controlerPos = getControler(world, startOrientation, corners);
-		Vec2f size = getSize(startOrientation, corners[0], corners[2]);
+		BlockPos controlerPos = getControler(world, startAxis, corners);
+		Vec2f size = getSize(startAxis, corners[0], corners[2]);
 		
-		return new BunkerDoorObject(world, controlerPos, startOrientation, size);
+		return new BunkerDoorObject(world, controlerPos, direction, size);
 	}
 	
+	//fonctions de verification du succe
 	public boolean isValid()
 	{
 		return valid;
@@ -128,19 +129,21 @@ public class BunkerDoorBlueprint implements Blueprint<BunkerDoorBlueprint, Bunke
 		return invalidityMessage;
 	}
 	
-	public static BunkerDoorBlueprint create(World world, BlockPos startBlockPos, BlockState startBlockState)
+	//createur du builder
+	public static BunkerDoorBlueprint create(World world, BlockPos startBlockPos, BlockState startBlockState, float yaw)
 	{
-		return new BunkerDoorBlueprint(world, startBlockPos, startBlockState);
+		return new BunkerDoorBlueprint(world, startBlockPos, startBlockState, yaw);
 		
 	}
 	
-	private static Vec2f getSize(Orientation orient, Vec3i pos1, Vec3i pos2) {
+	//fonctions utilitaire
+	private static Vec2f getSize(HorizontalAxis axis, Vec3i pos1, Vec3i pos2) {
 		Vec3d yVector1 = new Vec3d(pos1.getY(), 0, 0);
 		Vec3d yVector2 = new Vec3d(pos2.getY(), 0, 0);
 		double height = yVector1.distanceTo(yVector2);
 		
 		double width;
-		if(orient == Orientation.X)
+		if(axis == HorizontalAxis.X)
 		{
 			Vec3d xVector1 = new Vec3d(pos1.getX(), 0, 0);
     		Vec3d xVector2 = new Vec3d(pos2.getX(), 0, 0);
@@ -156,9 +159,9 @@ public class BunkerDoorBlueprint implements Blueprint<BunkerDoorBlueprint, Bunke
 		return new Vec2f((float) width + 1, (float) height + 1);
 	}
 	
-	private static BlockPos getControler(World world, Orientation orient, BlockPos[] corners)
+	private static BlockPos getControler(World world, HorizontalAxis axis, BlockPos[] corners)
 	{
-		Direction goodFacing = orient == Orientation.X ? Direction.EAST : Direction.SOUTH;
+		Direction goodFacing = axis == HorizontalAxis.X ? Direction.EAST : Direction.SOUTH;
 		for(BlockPos corner : corners)
 		{
 			BlockState state = world.getBlockState(corner);
@@ -170,15 +173,15 @@ public class BunkerDoorBlueprint implements Blueprint<BunkerDoorBlueprint, Bunke
 		return null;
 	}
 	
-	private static boolean isObstrued(World world, BlockPos controlerPos, Vec2f size, Orientation orient)
+	private static boolean isObstrued(World world, BlockPos controlerPos, Vec2f size, HorizontalAxis axis)
 	{
-		int xStart = orient == Orientation.X ? controlerPos.getX() + 1 : controlerPos.getX();
+		int xStart = axis == HorizontalAxis.X ? controlerPos.getX() + 1 : controlerPos.getX();
 		int yStart = controlerPos.getY() + 1;
-		int zStart = orient == Orientation.Z ? controlerPos.getZ() + 1 : controlerPos.getZ();
+		int zStart = axis == HorizontalAxis.Z ? controlerPos.getZ() + 1 : controlerPos.getZ();
 		
-		int xEnd = orient == Orientation.X ? controlerPos.getX() + (int) size.x - 1 : controlerPos.getX() + 1;
+		int xEnd = axis == HorizontalAxis.X ? controlerPos.getX() + (int) size.x - 1 : controlerPos.getX() + 1;
 		int yEnd = controlerPos.getY() + (int)size.y - 1;
-		int zEnd = orient == Orientation.Z ? controlerPos.getZ() + (int) size.x - 1 : controlerPos.getZ() + 1;
+		int zEnd = axis == HorizontalAxis.Z ? controlerPos.getZ() + (int) size.x - 1 : controlerPos.getZ() + 1;
 
 		for(int x = xStart; x < xEnd; x++)
 		{

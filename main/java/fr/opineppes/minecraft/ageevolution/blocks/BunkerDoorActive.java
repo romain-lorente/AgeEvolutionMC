@@ -80,7 +80,7 @@ public abstract class BunkerDoorActive extends HorizontalFacingBlock implements 
 	}
 	
 	public BlockRenderLayer getRenderLayer() {
-	      return BlockRenderLayer.CUTOUT_MIPPED;
+	      return BlockRenderLayer.CUTOUT;
 	   }
 	
 	public BlockRenderType getRenderType(BlockState blockState_1) {

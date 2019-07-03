@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import fr.opineppes.minecraft.ageevolution.shapes.BunkerDoorSideShapes;
+import fr.opineppes.minecraft.ageevolution.utils.HorizontalAxis;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.block.BlockRenderType;
@@ -129,7 +130,7 @@ public class BunkerDoorSideDeco extends HorizontalFacingBlock implements BunkerD
 	}
 
 	@Override
-	public Orientation getOrientation(BlockState blockState) {
+	public HorizontalAxis getAxis(BlockState blockState) {
 		Direction facing = blockState.get(FACING);
 		Type type = blockState.get(TYPE);
 		
@@ -137,29 +138,12 @@ public class BunkerDoorSideDeco extends HorizontalFacingBlock implements BunkerD
 		{
 		case TOP:
 		case BOTTOM:
-			switch(facing)
-			{
-			case NORTH:
-			case SOUTH:
-				return Orientation.X;
-			case WEST:
-			case EAST:
-				return Orientation.Z;
-			default:
-				return null;
-			}
+			if(facing == Direction.SOUTH || facing == Direction.NORTH)
+				return HorizontalAxis.X;
+			if(facing == Direction.EAST || facing == Direction.WEST)
+				return HorizontalAxis.Z;
 		case SIDE:
-			switch(facing)
-			{
-			case NORTH:
-			case SOUTH:
-				return Orientation.Z;
-			case WEST:
-			case EAST:
-				return Orientation.X;
-			default:
-				return null;
-			}
+			return HorizontalAxis.fromDirection(facing);
 		default:
 			return null;
 		}

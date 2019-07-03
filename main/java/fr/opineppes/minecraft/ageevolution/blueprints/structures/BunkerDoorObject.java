@@ -9,7 +9,7 @@ import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorCornerActive;
 import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorCornerDeco;
 import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorSideActive;
 import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorSideDeco;
-import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorStructure.Orientation;
+import fr.opineppes.minecraft.ageevolution.utils.HorizontalAxis;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -23,16 +23,16 @@ public class BunkerDoorObject {
 	
 	private World world;
 	private BlockPos controler;
-	private Orientation orient;
+	private Direction direction;
 	private Vec2f size;
 	private Boolean cachedClosed;
 	
 	//Creation et sauvegarde de la porte
 	
-	public BunkerDoorObject(World world, BlockPos controler, Orientation orient, Vec2f size) {
+	public BunkerDoorObject(World world, BlockPos controler, Direction direction, Vec2f size) {
 		this.world = world;
 		this.controler = controler;
-		this.orient = orient;
+		this.direction = direction;
 		this.size = size;
 		this.cachedClosed = null;
 	}
@@ -42,7 +42,7 @@ public class BunkerDoorObject {
 		int y = tag.getInt("y");
 		int z = tag.getInt("z");
 		controler = new BlockPos(x, y, z);
-		orient = Orientation.valueOf(tag.getString("orient"));
+		direction = Direction.byName(tag.getString("direction"));
 		
 		float xSize = tag.getFloat("xSize");
 		float ySize = tag.getFloat("ySize");
@@ -55,7 +55,7 @@ public class BunkerDoorObject {
 		tag.putInt("y", controler.getY());
 		tag.putInt("z", controler.getZ());
 		
-		tag.putString("orient", orient.toString());
+		tag.putString("direction", direction.toString());
 		
 		tag.putFloat("xSize", size.x);
 		tag.putFloat("ySize", size.y);
@@ -95,9 +95,8 @@ public class BunkerDoorObject {
 				}
 				else 
 				{
-					Direction facing = orient == Orientation.X ? Direction.SOUTH : Direction.WEST;
 					newBlockState = AgeEvolutionBlocks.BUNKER_DOOR_BARRIER.getDefaultState();
-					newBlockState = newBlockState.with(BunkerDoorSideActive.FACING, facing);
+					newBlockState = newBlockState.with(BunkerDoorSideActive.FACING, direction);
 					newBlockState = newBlockState.with(BunkerDoorActive.CLOSED, true);
 				}
 				
@@ -150,9 +149,9 @@ public class BunkerDoorObject {
 	
 	//Recuperations des propriete de la porte
 	
-	public Orientation getOrient()
+	public Direction getDirection()
 	{
-		return orient;
+		return direction;
 	}
 	
 	public Vec2f getSize()
@@ -171,23 +170,23 @@ public class BunkerDoorObject {
 	
 	public void forEachBlocks(Consumer<BlockPos> action)
 	{
-		forEachBlocks(controler, size, orient, action);
+		forEachBlocks(controler, size, HorizontalAxis.fromPerpendDirection(direction), action);
 	}
 	
 	public void forEachBlocksIn(Consumer<BlockPos> action)
 	{
-		forEachBlocksIn(controler, size, orient, action);
+		forEachBlocksIn(controler, size, HorizontalAxis.fromPerpendDirection(direction), action);
 	}
 	
-	public static void forEachBlocks(BlockPos controlerPos, Vec2f size, Orientation orient, Consumer<BlockPos> action)
+	public static void forEachBlocks(BlockPos controlerPos, Vec2f size, HorizontalAxis axis, Consumer<BlockPos> action)
 	{
-		int xStart = orient == Orientation.X ? controlerPos.getX() : controlerPos.getX();
+		int xStart = axis == HorizontalAxis.X ? controlerPos.getX() : controlerPos.getX();
 		int yStart = controlerPos.getY();
-		int zStart = orient == Orientation.Z ? controlerPos.getZ() : controlerPos.getZ();
+		int zStart = axis == HorizontalAxis.Z ? controlerPos.getZ() : controlerPos.getZ();
 		
-		int xEnd = orient == Orientation.X ? controlerPos.getX() + (int) size.x : controlerPos.getX() + 1;
+		int xEnd = axis == HorizontalAxis.X ? controlerPos.getX() + (int) size.x : controlerPos.getX() + 1;
 		int yEnd = controlerPos.getY() + (int)size.y;
-		int zEnd = orient == Orientation.Z ? controlerPos.getZ() + (int) size.x : controlerPos.getZ() + 1;
+		int zEnd = axis == HorizontalAxis.Z ? controlerPos.getZ() + (int) size.x : controlerPos.getZ() + 1;
 
 		for(int x = xStart; x < xEnd; x++)
 		{
@@ -201,15 +200,15 @@ public class BunkerDoorObject {
 		}
 	}
 	
-	public static void forEachBlocksIn(BlockPos controlerPos, Vec2f size, Orientation orient, Consumer<BlockPos> action)
+	public static void forEachBlocksIn(BlockPos controlerPos, Vec2f size, HorizontalAxis axis, Consumer<BlockPos> action)
 	{
-		int xStart = orient == Orientation.X ? controlerPos.getX() + 1 : controlerPos.getX();
+		int xStart = axis == HorizontalAxis.X ? controlerPos.getX() + 1 : controlerPos.getX();
 		int yStart = controlerPos.getY() + 1;
-		int zStart = orient == Orientation.Z ? controlerPos.getZ() + 1 : controlerPos.getZ();
+		int zStart = axis == HorizontalAxis.Z ? controlerPos.getZ() + 1 : controlerPos.getZ();
 		
-		int xEnd = orient == Orientation.X ? controlerPos.getX() + (int) size.x - 1 : controlerPos.getX() + 1;
+		int xEnd = axis == HorizontalAxis.X ? controlerPos.getX() + (int) size.x - 1 : controlerPos.getX() + 1;
 		int yEnd = controlerPos.getY() + (int)size.y - 1;
-		int zEnd = orient == Orientation.Z ? controlerPos.getZ() + (int) size.x - 1 : controlerPos.getZ() + 1;
+		int zEnd = axis == HorizontalAxis.Z ? controlerPos.getZ() + (int) size.x - 1 : controlerPos.getZ() + 1;
 
 		for(int x = xStart; x < xEnd; x++)
 		{

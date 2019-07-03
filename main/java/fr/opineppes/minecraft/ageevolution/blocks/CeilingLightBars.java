@@ -1,11 +1,12 @@
 package fr.opineppes.minecraft.ageevolution.blocks;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
-import java.util.List;
+import java.util.Map;
 
 import fr.opineppes.minecraft.ageevolution.shapes.CeilingLightBarsShapes;
-
+import fr.opineppes.minecraft.ageevolution.utils.HorizontalAxis;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.block.BlockRenderType;
@@ -14,22 +15,22 @@ import net.minecraft.entity.EntityContext;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+
 public class CeilingLightBars extends Block {
 	
-	public static final EnumProperty<Orientation> ORIENT;
+	public static final Map<HorizontalAxis, VoxelShape> BOUNDING_SHAPES;
+	public static final EnumProperty<HorizontalAxis> ORIENT;
 	
 	public CeilingLightBars(Settings block$Settings_1) {
 		super(block$Settings_1);
-		this.setDefaultState(this.getDefaultState().with(ORIENT, Orientation.X));
+		this.setDefaultState(this.getDefaultState().with(ORIENT, HorizontalAxis.X));
 	}
 	
 	public BlockState getPlacementState(ItemPlacementContext itemPlacementContext_1) {
-		return (BlockState)this.getDefaultState().with(ORIENT, Orientation.getOrientation(itemPlacementContext_1.getPlayerFacing().getOpposite()));
+		return (BlockState)this.getDefaultState().with(ORIENT, HorizontalAxis.fromDirection(itemPlacementContext_1.getPlayerFacing().getOpposite()));
 	}
 	
 	public BlockRenderLayer getRenderLayer() {
@@ -41,7 +42,7 @@ public class CeilingLightBars extends Block {
 	}
 	
 	public VoxelShape getOutlineShape(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1, EntityContext entityContext_1) {
-		return blockState_1.get(ORIENT).getShape();
+		return BOUNDING_SHAPES.get(blockState_1.get(ORIENT));
 	}
 	
 	protected void appendProperties(StateFactory.Builder<Block, BlockState> stateFactory$Builder_1) {
@@ -49,46 +50,7 @@ public class CeilingLightBars extends Block {
 	}
 	
 	static {
-		ORIENT = EnumProperty.of("orient", Orientation.class);
+		BOUNDING_SHAPES = Maps.newEnumMap(ImmutableMap.of(HorizontalAxis.X, CeilingLightBarsShapes.SHAPE_X, HorizontalAxis.Z, CeilingLightBarsShapes.SHAPE_Z));
+		ORIENT = EnumProperty.of("orient", HorizontalAxis.class);
 	}
-	
-	public static enum Orientation implements StringIdentifiable
-	{
-		X("x", Lists.newArrayList(Direction.EAST, Direction.WEST), CeilingLightBarsShapes.SHAPE_X),
-		Z("z", Lists.newArrayList(Direction.NORTH, Direction.SOUTH), CeilingLightBarsShapes.SHAPE_Z);
-		
-		private String value;
-		private List<Direction> directions;
-		private VoxelShape shape;
-		
-		Orientation(String value, List<Direction> directions, VoxelShape shape)
-		{
-			this.value = value;
-			this.directions = directions;
-			this.shape = shape;
-		}
-		
-		public VoxelShape getShape()
-		{
-			return shape;
-		}
-
-		@Override
-		public String asString() {
-			return value;
-		}
-		
-		public static Orientation getOrientation(Direction dir)
-		{
-			for(Orientation orientation : values())
-			{
-				if(orientation.directions.contains(dir))
-				{
-					return orientation;
-				}
-			}
-			return null;
-		}
-	}
-
 }

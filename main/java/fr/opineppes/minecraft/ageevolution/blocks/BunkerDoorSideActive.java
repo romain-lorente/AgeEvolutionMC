@@ -16,6 +16,7 @@ import net.minecraft.state.StateFactory.Builder;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
@@ -25,6 +26,7 @@ public class BunkerDoorSideActive extends BunkerDoorActive {
 	public static final Map<Direction, VoxelShape> BOUNDING_SHAPES_BOTTOM;
 	public static final Map<Direction, VoxelShape> BOUNDING_SHAPES_SIDE;
 	public static final Map<Direction, VoxelShape> BOUNDING_SHAPES_CLOSED;
+	public static final Map<Axis, VoxelShape> BOUNDING_SHAPES_AXIS_CLOSED;
 	public static final EnumProperty<Type> TYPE;
 	
 	public BunkerDoorSideActive(Settings block$Settings_1) {
@@ -42,17 +44,9 @@ public class BunkerDoorSideActive extends BunkerDoorActive {
 	public VoxelShape getClosedOutlineShape(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1,
 			EntityContext entityContext_1) {
 		if(blockState_1.get(TYPE) == Type.SIDE)
-			switch(blockState_1.get(FACING))
-			{
-			case NORTH:
-			case SOUTH:
-				return BunkerDoorClosedShapes.Z;
-			case EAST:
-			case WEST:
-				return BunkerDoorClosedShapes.X;
-			default:
-				break;
-			}
+		{
+			return BOUNDING_SHAPES_AXIS_CLOSED.get(blockState_1.get(FACING).getAxis());
+		}
 		return BOUNDING_SHAPES_CLOSED.get(blockState_1.get(FACING));
 	}
 	
@@ -73,6 +67,7 @@ public class BunkerDoorSideActive extends BunkerDoorActive {
 		BOUNDING_SHAPES_BOTTOM = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, BunkerDoorSideShapes.Z_BOTTOM, Direction.EAST, BunkerDoorSideShapes.X_BOTTOM, Direction.SOUTH, BunkerDoorSideShapes.Z_BOTTOM, Direction.WEST, BunkerDoorSideShapes.X_BOTTOM));
 		BOUNDING_SHAPES_SIDE = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, BunkerDoorSideShapes.NORTH_SIDE, Direction.EAST, BunkerDoorSideShapes.EAST_SIDE, Direction.SOUTH, BunkerDoorSideShapes.SOUTH_SIDE, Direction.WEST, BunkerDoorSideShapes.WEST_SIDE));
 		BOUNDING_SHAPES_CLOSED = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, BunkerDoorClosedShapes.X, Direction.EAST, BunkerDoorClosedShapes.Z, Direction.SOUTH, BunkerDoorClosedShapes.X, Direction.WEST, BunkerDoorClosedShapes.Z));
+		BOUNDING_SHAPES_AXIS_CLOSED = Maps.newEnumMap(ImmutableMap.of(Axis.X, BunkerDoorClosedShapes.X, Axis.Z, BunkerDoorClosedShapes.Z));
 		TYPE = EnumProperty.of("type", Type.class);
 	}
 }
