@@ -45,10 +45,15 @@ public class BunkerDoorBlockEntity extends BlockEntity implements BlockEntityCli
 	@Override
 	public void fromClientTag(CompoundTag tag) {
 		this.fromTag(tag);
+		
+		this.animation = tag.getFloat("animation");
+		this.lastAnimation = tag.getFloat("lastAnimation");
 	}
 
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
+		tag.putFloat("animation", animation);
+		tag.putFloat("lastAnimation", animation);
 		return this.toTag(tag);
 	}
 	
@@ -95,16 +100,13 @@ public class BunkerDoorBlockEntity extends BlockEntity implements BlockEntityCli
 	}
 	
 	//Animation progress
-	
 	public void tick() {
-		if(world != null && world.isClient)
-			System.out.println(animation);
-	      this.lastAnimation = this.animation;
-//	      if (this.animation == 0.0F) {
-//	         //this.playSound(SoundEvents.BLOCK_CHEST_OPEN);
-//	      }
+		this.lastAnimation = this.animation;
+//	    if (this.animation == 0.0F) {
+//	        this.playSound(SoundEvents.BLOCK_CHEST_OPEN);
+//	    }
 	      
-	      boolean open = !isClosed();
+	    boolean open = !isClosed();
 
 	      if (!open && this.animation > 0.0F || open && this.animation < 53.0F) {
 //	         float float_2 = this.animation;
