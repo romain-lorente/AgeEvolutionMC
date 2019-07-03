@@ -34,6 +34,7 @@ public class AgeEvolutionItems {
 	public static final Item FIRE_EXTINGUISHER = new BlockItem(AgeEvolutionBlocks.FIRE_EXTINGUISHER, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item BUNKER_DOOR_CORNER_DECO = new BlockItem(AgeEvolutionBlocks.BUNKER_DOOR_CORNER_DECO, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item BUNKER_DOOR_SIDE_DECO = new BlockItem(AgeEvolutionBlocks.BUNKER_DOOR_SIDE_DECO, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
+	public static final Item COLORED_COBBLESTONE_STAIRS = new BlockItem(AgeEvolutionBlocks.COLORED_COBBLESTONE_STAIRS, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	
 	public static void registerAllItems()
 	{
@@ -59,5 +60,6 @@ public class AgeEvolutionItems {
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "fire_extinguisher"), FIRE_EXTINGUISHER);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "bunker_door_corner_deco"), BUNKER_DOOR_CORNER_DECO);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "bunker_door_side_deco"), BUNKER_DOOR_SIDE_DECO);
+		Registry.register(Registry.ITEM, new Identifier("ageevolution", "colored_cobblestone_stairs"), COLORED_COBBLESTONE_STAIRS);
 	}
 }

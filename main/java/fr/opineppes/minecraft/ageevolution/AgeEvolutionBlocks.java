@@ -1,5 +1,6 @@
 package fr.opineppes.minecraft.ageevolution;
 
+import fr.opineppes.minecraft.ageevolution.blocks.AgeEvolutionStairsBlock;
 import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorBarrier;
 import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorCornerActive;
 import fr.opineppes.minecraft.ageevolution.blocks.BunkerDoorCornerDeco;
@@ -41,7 +42,11 @@ public class AgeEvolutionBlocks {
 	public static final Block BUNKER_DOOR_SIDE_ACTIVE = new BunkerDoorSideActive(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
 	public static final Block BUNKER_DOOR_BARRIER = new BunkerDoorBarrier(FabricBlockSettings.of(Material.METAL).breakByHand(true).strength(2.0F, 3.0F).build());
 	
+	//Blocs escalier
+	public static final Block COLORED_COBBLESTONE_STAIRS = new AgeEvolutionStairsBlock(COLORED_COBBLESTONE.getDefaultState(), Block.Settings.copy(COLORED_COBBLESTONE));
 	
+	//Blocs dalle
+
 	public static void registerAllBlocks()
 	{
 		//Pour enregistrer un item de bloc, se rendre dans AgeEvolutionItems
@@ -69,5 +74,9 @@ public class AgeEvolutionBlocks {
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "bunker_door_corner_active"), BUNKER_DOOR_CORNER_ACTIVE);
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "bunker_door_side_active"), BUNKER_DOOR_SIDE_ACTIVE);
 		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "bunker_door_barrier"), BUNKER_DOOR_BARRIER);
+		
+		//Blocs escalier
+		Registry.register(Registry.BLOCK, new Identifier("ageevolution", "colored_cobblestone_stairs"), COLORED_COBBLESTONE_STAIRS);
+		
 	}
 }

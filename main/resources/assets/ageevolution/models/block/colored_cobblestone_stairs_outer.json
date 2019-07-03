@@ -1,0 +1,8 @@
+{
+    "parent": "minecraft:block/outer_stairs",
+    "textures": {
+        "bottom": "ageevolution:block/colored_cobblestone",
+        "top": "ageevolution:block/colored_cobblestone",
+        "side": "ageevolution:block/colored_cobblestone"
+    }
+}
