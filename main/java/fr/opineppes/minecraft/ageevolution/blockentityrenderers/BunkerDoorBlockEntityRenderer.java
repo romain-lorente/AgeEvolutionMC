@@ -21,7 +21,8 @@ import net.minecraft.util.math.Vec3i;
 
 public class BunkerDoorBlockEntityRenderer extends BlockEntityRenderer<BunkerDoorBlockEntity> {
 	
-	private static final Identifier NORMAL_TEX = new Identifier("ageevolution", "textures/block/bunker_lightgray.png");
+	private static final Identifier DOOR_TEX = new Identifier("ageevolution", "textures/block/bunker_door_door_dark.png");
+	private static final Identifier VALVE_TEX = new Identifier("ageevolution", "textures/block/bunker_door_door_valve.png");
 	private final BunkerDoorModel bunkerDoorModel = new BunkerDoorModel();
 
 	public void render(BunkerDoorBlockEntity blockEntity_1, double double_1, double double_2, double double_3, float float_1, int int_1) {
@@ -29,28 +30,31 @@ public class BunkerDoorBlockEntityRenderer extends BlockEntityRenderer<BunkerDoo
 		GlStateManager.enableDepthTest();
     	GlStateManager.depthFunc(515);
     	GlStateManager.depthMask(true);
-	      
-    	this.bindTexture(NORMAL_TEX);
-    		
+
     	GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
     	GlStateManager.pushMatrix();
     	GlStateManager.enableRescaleNormal();
 
-    	GlStateManager.translatef((float) double_1, (float) double_2, (float) double_3);
+    	GlStateManager.translatef((float) double_1, (float) double_2 + 1.0F, (float) double_3 + 1.0F);
+    	GlStateManager.scalef(1.0F, -1.0F, -1.0F);
     	
-    	float progress = blockEntity_1.getAnimationProgress(float_1);
-    	float translation = progress <= 8 ? progress : 8;
-    	float rotation = progress > 8 ? progress <= 53 ? progress - 8 : 45 : 0;
-    	applyDoorAnimation(blockEntity_1, translation, rotation);
-    	
+    	//Gestion de la progression de l'animation
+		BlockPos thisPosition = blockEntity_1.getPos();
+		BlockPos doorPosition = blockEntity_1.getDoorPosition();
+		Direction direction = blockEntity_1.getDirection();
 		BlockState blockState_1 = blockEntity_1.hasWorld() ? blockEntity_1.getCachedState() : null;
-		if(blockState_1 != null)
+		Vec2f size = blockEntity_1.getSize();
+    	float progress = blockEntity_1.getAnimationProgress(float_1);
+		
+		if(doorPosition != null && direction != null && size != null && blockState_1 != null)
 		{
-	    	Direction direction = blockEntity_1.getDirection();
-			float yAxis = direction != null ? direction.asRotation() : 0;
-			
-			applyRotation(yAxis, blockState_1);
-			renderPart(blockState_1);
+	    	float translation = progress <= 8 ? progress : 8;
+	    	float rotation = progress > 8 ? progress <= 53 ? progress - 8 : 45 : 0;
+	    	applyDoorTopAnimation(thisPosition, doorPosition, direction, size, translation, rotation);
+	    	renderDoor(direction, blockState_1);
+	    	
+	    	//applyValveAnimation(thisPosition, doorPosition, direction, rotation);
+	    	renderValve();
 		}
 		 
 		GlStateManager.disableRescaleNormal();
@@ -59,38 +63,65 @@ public class BunkerDoorBlockEntityRenderer extends BlockEntityRenderer<BunkerDoo
 		
 	}
 	
-	private void applyDoorAnimation(BunkerDoorBlockEntity entity, float position, float rotation)
+	private void applyValveAnimation(BlockPos blockPosition, BlockPos doorPosition, Direction direction, float rotation)
 	{
-		BlockPos doorPosition = entity.getDoorPosition();
-		BlockPos thisPosition = entity.getPos();
-		Direction direction = entity.getDirection();
-		Vec2f size = entity.getSize();
+		Vec3i offsets = blockPosition.subtract(doorPosition);
+		HorizontalAxis axis = HorizontalAxis.fromPerpendDirection(direction);
+		float xRot = axis.getOffsetX() * -direction.getDirection().offset();
+		float zRot = axis.getOffsetZ() * direction.getDirection().offset();
 		
-		if(doorPosition != null && direction != null && size != null)
-		{
-			Vec3i offsets = thisPosition.subtract(doorPosition);
-			HorizontalAxis axis = HorizontalAxis.fromPerpendDirection(direction);
-			float xRot = axis.getOffsetX() * -direction.getDirection().offset();
-			float zRot = axis.getOffsetZ() * direction.getDirection().offset();
-			
-			float xPos = 0.0625F * position * direction.getOffsetX();
-			float zPos = 0.0625F * position * direction.getOffsetZ();
-			
-			GlStateManager.translatef(xPos, 0.0F, zPos);
-			
-			GlStateManager.translatef(-offsets.getX(), -offsets.getY() + size.y - 1, -offsets.getZ());
-			GlStateManager.translatef(0.5F, 0.5F, 0.5F);
-			GlStateManager.rotatef((float) rotation * 2.0F, xRot, 0.0F, zRot);
-			GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
-			GlStateManager.translatef(offsets.getX(), offsets.getY() - size.y + 1, offsets.getZ());
-		}
+		//GlStateManager.translatef(offsets.getX() + 0.5F, -offsets.getY() - 1 + 0.75F, offsets.getZ() + 0.5F);
+		//GlStateManager.rotatef((float) rotation * 2.0F, xRot, 0.0F, zRot);
+		//GlStateManager.translatef(offsets.getX() - 0.5F, offsets.getY() + 1 - 0.75F, offsets.getZ() - 0.5F);
+	}
+	
+	private void renderValve(Vec2f size)
+	{
+		this.bindTexture(VALVE_TEX);
+		bunkerDoorModel.renderValve();
+	}
+	
+	private void applyDoorTopAnimation(BlockPos blockPosition, BlockPos doorPosition, Direction direction, Vec2f size, float position, float rotation)
+	{
+		Vec3i offsets = blockPosition.subtract(doorPosition);
+		HorizontalAxis axis = HorizontalAxis.fromPerpendDirection(direction);
+		float xRot = axis.getOffsetX() * -direction.getDirection().offset();
+		float zRot = axis.getOffsetZ() * -direction.getDirection().offset();
 		
+		float xPos = 0.0625F * (position / 2) * direction.getOffsetX();
+		float zPos = 0.0625F * (position / 2) * -direction.getOffsetZ();
+
+		GlStateManager.translatef(xPos - offsets.getX() + 0.5F, offsets.getY() + 0.25F - size.y + 1, zPos + offsets.getZ() + 0.5F);
+		GlStateManager.rotatef((float) rotation * 2.0F, xRot, 0.0F, zRot);
+		GlStateManager.translatef(offsets.getX() - 0.5F, -offsets.getY() - 0.25F + size.y - 1, -offsets.getZ() - 0.5F);
+	}
+	
+	private void applyDoorSideAnimation(BlockPos blockPosition, BlockPos doorPosition, Direction direction, Vec2f size, float position, float rotation)
+	{
+		Vec3i offsets = blockPosition.subtract(doorPosition);
+		HorizontalAxis axis = HorizontalAxis.fromPerpendDirection(direction);
+		float xRot = axis.getOffsetX() * -direction.getDirection().offset();
+		float zRot = axis.getOffsetZ() * -direction.getDirection().offset();
+		
+		float xPos = 0.0625F * (position / 2) * direction.getOffsetX();
+		float zPos = 0.0625F * (position / 2) * -direction.getOffsetZ();
+
+		GlStateManager.translatef(xPos - offsets.getX() + 0.5F, offsets.getY() + 0.5F - size.y + 1, zPos + offsets.getZ() + 0.5F);
+		GlStateManager.rotatef((float) rotation * 2.0F, 0.0F, axis.getOffsetX(), 0.0F);
+		GlStateManager.translatef(offsets.getX() - 0.5F, -offsets.getY() - 0.5F + size.y - 1, -offsets.getZ() - 0.5F);
+	}
+	
+	private void renderDoor(Direction direction, BlockState state)
+	{
+		applyRotation(direction, state);
+		renderPart(state);
 	}
 	
 	private void renderPart(BlockState state)
 	{
 		Block block = state.getBlock();
 
+		this.bindTexture(DOOR_TEX);
 		if(block == AgeEvolutionBlocks.BUNKER_DOOR_BARRIER)
 		{
 			bunkerDoorModel.renderCenter();
@@ -105,65 +136,52 @@ public class BunkerDoorBlockEntityRenderer extends BlockEntityRenderer<BunkerDoo
 		}
 	}
 	
-	private void applyRotation(float yAxis, BlockState state)
+	private void applyRotation(Direction direction, BlockState state)
 	{
 	    GlStateManager.translatef(0.5F, 0.5F, 0.5F);
+	    
+	    HorizontalAxis axis = HorizontalAxis.fromDirection(direction);
 	    
 		Block block = state.getBlock();
 		if(block == AgeEvolutionBlocks.BUNKER_DOOR_SIDE_ACTIVE)
 		{
 			BunkerDoorSideDeco.Type type = state.get(BunkerDoorSideActive.TYPE);
-			if(type == BunkerDoorSideDeco.Type.TOP)
+			if(type == BunkerDoorSideDeco.Type.BOTTOM)
 			{
-		    	GlStateManager.rotatef(180F, 0.0F, 0.0F, 1.0F);
+		    	GlStateManager.rotatef(180F, axis.getOffsetX(), 0.0F, axis.getOffsetZ());
 			}
 			if(type == BunkerDoorSideDeco.Type.SIDE)
 			{
-				Direction direction = state.get(BunkerDoorSideActive.FACING);
-				if(direction == Direction.NORTH)
-					GlStateManager.rotatef(-90F, 1.0F, 0.0F, 0.0F);
-				if(direction == Direction.SOUTH)
-					GlStateManager.rotatef(90F, 1.0F, 0.0F, 0.0F);
-				if(direction == Direction.EAST)
-					GlStateManager.rotatef(-90F, 0.0F, 0.0F, 1.0F);
-				if(direction == Direction.WEST)
-					GlStateManager.rotatef(90F, 0.0F, 0.0F, 1.0F);
-			}
-			
-			if ((double)Math.abs(yAxis) > 1.0E-5D) {
-			    GlStateManager.rotatef(yAxis, 0.0F, 1.0F, 0.0F);
-			}
-		}
-		if(block == AgeEvolutionBlocks.BUNKER_DOOR_BARRIER)
-		{
-			if ((double)Math.abs(yAxis) > 1.0E-5D) {
-			    GlStateManager.rotatef(yAxis, 0.0F, 1.0F, 0.0F);
+				Direction directionState = state.get(BunkerDoorSideActive.FACING);
+				GlStateManager.rotatef(90F * -directionState.getDirection().offset(), axis.getOffsetX(), 0.0F, axis.getOffsetZ());
 			}
 		}
 		if(block == AgeEvolutionBlocks.BUNKER_DOOR_CORNER_ACTIVE)
 		{
 			BunkerDoorCornerDeco.Type type = state.get(BunkerDoorCornerActive.TYPE);
-			Direction direction = state.get(BunkerDoorSideActive.FACING);
+			Direction directionState = state.get(BunkerDoorCornerActive.FACING);
 			if(type == BunkerDoorCornerDeco.Type.TOP)
 			{
-				if(direction == Direction.NORTH || direction == Direction.SOUTH )
-					GlStateManager.rotatef(-90F * direction.getOffsetZ(), 0.0F, 1.0F, 0.0F);
-				if(direction == Direction.WEST )
-					GlStateManager.rotatef(-180F, 0.0F, 1.0F, 0.0F);
+				GlStateManager.rotatef(90F * directionState.getDirection().offset(), axis.getOffsetX(), 0.0F, axis.getOffsetZ());
 			}
-			if(type == BunkerDoorCornerDeco.Type.BOTTOM)
+			
+			boolean flag1 = direction == Direction.EAST && directionState == Direction.SOUTH;
+			boolean flag2 = direction == Direction.SOUTH && directionState == Direction.WEST;
+			boolean flag3 = direction == Direction.WEST && directionState == Direction.NORTH;
+			boolean flag4 = direction == Direction.NORTH && directionState == Direction.EAST;
+			if(flag1 || flag2|| flag3 || flag4)
 			{
-				if(direction == Direction.NORTH || direction == Direction.SOUTH )
-					GlStateManager.rotatef(180F, 0.0F, 0.0F, 1.0F);
-					GlStateManager.rotatef(-90F * direction.getOffsetZ(), 0.0F, 1.0F, 0.0F);
-				if(direction == Direction.WEST || direction == Direction.EAST)
-					GlStateManager.rotatef(180F, 1.0F, 0.0F, 0.0F);
-				if(direction == Direction.WEST )
-					GlStateManager.rotatef(-180F, 0.0F, 1.0F, 0.0F);
+				GlStateManager.rotatef(90F * directionState.getDirection().offset(), axis.getOffsetX(), 0.0F, axis.getOffsetZ());
 			}
 		}
 		
+	    
+		float yAxis = direction != null ? direction.asRotation() : 0;
+		if ((double)Math.abs(yAxis) > 1.0E-5D) {
+		    GlStateManager.rotatef(yAxis, 0.0F, 1.0F, 0.0F);
+		}
+	    
+		
     	GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
 	}
-	
 }
