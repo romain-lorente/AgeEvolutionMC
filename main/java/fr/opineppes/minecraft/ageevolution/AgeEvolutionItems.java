@@ -18,6 +18,7 @@ public class AgeEvolutionItems {
 	
 	//ItemsBlocks
 	public static final Item COLORED_COBBLESTONE = new BlockItem(AgeEvolutionBlocks.COLORED_COBBLESTONE, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
+	public static final Item COLORED_COBBLESTONE_STAIRS = new BlockItem(AgeEvolutionBlocks.COLORED_COBBLESTONE_STAIRS, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item FLOOR_TILES = new BlockItem(AgeEvolutionBlocks.FLOOR_TILES, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item FLOOR_TILE_DARK = new BlockItem(AgeEvolutionBlocks.FLOOR_TILE_DARK, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item FLOOR_TILE_LIGHT = new BlockItem(AgeEvolutionBlocks.FLOOR_TILE_LIGHT, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
@@ -34,7 +35,6 @@ public class AgeEvolutionItems {
 	public static final Item FIRE_EXTINGUISHER = new BlockItem(AgeEvolutionBlocks.FIRE_EXTINGUISHER, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item BUNKER_DOOR_CORNER_DECO = new BlockItem(AgeEvolutionBlocks.BUNKER_DOOR_CORNER_DECO, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	public static final Item BUNKER_DOOR_SIDE_DECO = new BlockItem(AgeEvolutionBlocks.BUNKER_DOOR_SIDE_DECO, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
-	public static final Item COLORED_COBBLESTONE_STAIRS = new BlockItem(AgeEvolutionBlocks.COLORED_COBBLESTONE_STAIRS, new Item.Settings().group(AgeEvolutionItemGroups.GROUP_DECO));
 	
 	public static void registerAllItems()
 	{
@@ -44,6 +44,7 @@ public class AgeEvolutionItems {
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "bunker_door_door"), BUNKER_DOOR_DOOR);
 		
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "colored_cobblestone"), COLORED_COBBLESTONE);
+		Registry.register(Registry.ITEM, new Identifier("ageevolution", "colored_cobblestone_stairs"), COLORED_COBBLESTONE_STAIRS);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "floor_tiles"), FLOOR_TILES);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "floor_tile_dark"), FLOOR_TILE_DARK);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "floor_tile_light"), FLOOR_TILE_LIGHT);
@@ -60,6 +61,5 @@ public class AgeEvolutionItems {
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "fire_extinguisher"), FIRE_EXTINGUISHER);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "bunker_door_corner_deco"), BUNKER_DOOR_CORNER_DECO);
 		Registry.register(Registry.ITEM, new Identifier("ageevolution", "bunker_door_side_deco"), BUNKER_DOOR_SIDE_DECO);
-		Registry.register(Registry.ITEM, new Identifier("ageevolution", "colored_cobblestone_stairs"), COLORED_COBBLESTONE_STAIRS);
 	}
 }
