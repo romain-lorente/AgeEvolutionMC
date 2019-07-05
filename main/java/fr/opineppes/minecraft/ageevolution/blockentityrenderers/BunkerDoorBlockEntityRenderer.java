@@ -26,8 +26,6 @@ public class BunkerDoorBlockEntityRenderer extends BlockEntityRenderer<BunkerDoo
 	private static final Identifier DOOR_TEX = new Identifier("ageevolution", "textures/block/bunker_door_door_dark.png");
 	private static final Identifier VALVE_TEX = new Identifier("ageevolution", "textures/block/bunker_door_door_valve.png");
 	private final BunkerDoorModel bunkerDoorModel = new BunkerDoorModel();
-	
-	float animation = 0;
 
 	public void render(BunkerDoorBlockEntity blockEntity_1, double double_1, double double_2, double double_3, float float_1, int int_1) {
     	
@@ -56,12 +54,13 @@ public class BunkerDoorBlockEntityRenderer extends BlockEntityRenderer<BunkerDoo
 		
 		if(doorPosition != null && direction != null && size != null && blockState_1 != null)
 		{
-	    	float translation = progress <= 8 ? progress : 8;
-	    	float rotation = progress > 8 ? progress <= 53 ? progress - 8 : 45 : 0;
+	    	float translation = progress > 45 ? progress <= 53 ? progress - 45 : 8 : 0;
+	    	float rotation = progress > 53 ? progress <= 98 ? progress - 53 : 45 : 0;
 	    	applyDoorTopAnimation(thisPosition, doorPosition, direction, size, translation, rotation);
 	    	
+	    	float valveRotation = progress <= 45 ? progress : 45;
 	    	renderDoor(direction, axis, blockState_1);
-	    	renderValve(thisPosition, doorPosition, direction, axis, size);
+	    	renderValve(thisPosition, doorPosition, direction, axis, size, valveRotation);
 		}
 		 
 		GlStateManager.disableRescaleNormal();
@@ -85,9 +84,10 @@ public class BunkerDoorBlockEntityRenderer extends BlockEntityRenderer<BunkerDoo
 		GlStateManager.rotatef((float) rotation * 2.0F, xRot, 0.0F, zRot);
 		GlStateManager.translatef(offsets.getX() - 0.5F, -offsets.getY() - 0.25F + size.y - 1, -offsets.getZ() - 0.5F);
 	}
+
 	
 	//Affichage du verrou
-	private void renderValve(BlockPos blockPosition, BlockPos doorPosition, Direction direction, HorizontalAxis axis, Vec2f size)
+	private void renderValve(BlockPos blockPosition, BlockPos doorPosition, Direction direction, HorizontalAxis axis, Vec2f size, float rotation)
 	{
 		Vec3i distance = BlockPosUtils.getDistance(blockPosition, doorPosition);
 		
@@ -99,20 +99,22 @@ public class BunkerDoorBlockEntityRenderer extends BlockEntityRenderer<BunkerDoo
 		
 		float horizontalOffset = horizontalPosValve - MathHelper.floor(horizontalPosValve);
 		float verticalOffset = verticalPosValve - MathHelper.floor(verticalPosValve);
-		animation += 0.01;
 		
 		GlStateManager.pushMatrix();
-		applyValveRotation(direction, axis, horizontalOffset, verticalOffset);
+		applyValveRotation(direction, axis, rotation, horizontalOffset, verticalOffset);
 		renderValveModel(axis, horizontalPosValve, verticalPosValve, horizontalBlock, verticalBlock, horizontalOffset, verticalOffset);
 		GlStateManager.popMatrix();
 	}
 	
-	private void applyValveRotation(Direction direction, HorizontalAxis axis, float horizontalOffset, float verticalOffset)
+	private void applyValveRotation(Direction direction, HorizontalAxis axis, float rotation, float horizontalOffset, float verticalOffset)
 	{
-		GlStateManager.translatef((-0.5F + horizontalOffset) * axis.getOffsetZ(), 0.5F - verticalOffset, (0.5F - horizontalOffset) * axis.getOffsetX());
+ 		float transX = (-0.5F + horizontalOffset) * axis.getOffsetZ();
+		float transY = 0.5F - verticalOffset;
+		float transZ = (0.5F - horizontalOffset) * axis.getOffsetX();
+		GlStateManager.translatef(transX, transY, transZ);
 		
 		GlStateManager.translatef(0.5F, 0.5F, 0.5F);
-		GlStateManager.rotatef(animation % 360, axis.getOffsetX(), 0.0F, axis.getOffsetZ());
+		GlStateManager.rotatef(rotation % 360, axis.getOffsetX(), 0.0F, axis.getOffsetZ());
 		float yAxis = direction != null ? direction.asRotation() : 0;
 		if ((double)Math.abs(yAxis) > 1.0E-5D) {
 		    GlStateManager.rotatef(yAxis, 0.0F, 1.0F, 0.0F);
@@ -125,6 +127,7 @@ public class BunkerDoorBlockEntityRenderer extends BlockEntityRenderer<BunkerDoo
 		if(horizontalBlock + horizontalOffset == horizontalPosValve && verticalBlock + verticalOffset == verticalPosValve)
 		{
 			this.bindTexture(VALVE_TEX);
+			
 			bunkerDoorModel.renderValve();
 			GlStateManager.translatef(0.5F, 0.5F, 0.5F);
 			GlStateManager.rotatef(180F, 0.0F, 1.0F, 0.0F);

@@ -108,7 +108,7 @@ public class BunkerDoorBlockEntity extends BlockEntity implements BlockEntityCli
 	      
 	    boolean open = !isClosed();
 
-	      if (!open && this.animation > 0.0F || open && this.animation < 53.0F) {
+	      if (!open && this.animation > 0.0F || open && this.animation < 98.0F) {
 //	         float float_2 = this.animation;
 	         if (open) {
 	            this.animation += 0.5F;
@@ -116,8 +116,8 @@ public class BunkerDoorBlockEntity extends BlockEntity implements BlockEntityCli
 	            this.animation -= 0.5F;
 	         }
 
-	         if (this.animation > 53.0F) {
-	            this.animation = 53.0F;
+	         if (this.animation > 98.0F) {
+	            this.animation = 98.0F;
 	         }
 
 //	         if (this.animation < 0.5F && float_2 >= 0.5F) {
